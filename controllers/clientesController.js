@@ -63,7 +63,13 @@ const obtenerCliente = async(req, res, next) => {
 const updateCliente = async(req, res, next) => {
     try{
             const cliente = await Clientes.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
+            if(!cliente){
+                res.json({mensaje: 'Ese cliente no existe'})
+                next()
+            }
+            
             res.json(cliente)
+            
     }catch(error){
         res.json({
             mensaje: "Hubo un error",

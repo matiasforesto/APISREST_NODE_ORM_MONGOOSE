@@ -7,28 +7,30 @@ import {nuevoCliente,
         updateCliente, 
         deleteCliente} from "../controllers/clientesController.js"
 
+//middleware para proteger las rutas
+import {authHeader} from '../middleware/auth.js'
 
 const router = express.Router()
 
 
 //Usuarios
-router.post('/crear-cuenta', registrarUsuario)
+router.post('/crear-cuenta', authHeader, registrarUsuario)
 router.post('/iniciar-sesion', autenticarUsuario)
 
 //Crear Cliente
-router.post('/clientes', nuevoCliente)
+router.post('/clientes', authHeader, nuevoCliente)
 
 //Ontener todos los clientes
-router.get('/clientes', obtenerClientes)
+router.get('/clientes', authHeader, obtenerClientes)
 
 //Obtener un cliente
-router.get('/clientes/:id', obtenerCliente) 
+router.get('/clientes/:id', authHeader, obtenerCliente) 
 
 //Actualizar cliente
-router.put('/clientes/:id', updateCliente)
+router.put('/clientes/:id', authHeader, updateCliente)
 
 //Eliminar cliente
-router.delete('/clientes/:id', deleteCliente)
+router.delete('/clientes/:id', authHeader, deleteCliente)
 
 export default function(){
     return router;
